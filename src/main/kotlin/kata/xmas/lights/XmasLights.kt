@@ -35,6 +35,22 @@ class XmasLights(
         }
     }
 
+    fun turnOffRange(from : Pair<Int, Int>, to : Pair<Int, Int>) {
+        for (x in from.first..to.first) {
+            for (y in from.second..to.second) {
+                turnOff(x, y)
+            }
+        }
+    }
+
+    fun toggleRange(from : Pair<Int, Int>, to : Pair<Int, Int>) {
+        for (x in from.first..to.first) {
+            for (y in from.second..to.second) {
+                toggle(x, y)
+            }
+        }
+    }
+
     fun turnOn(x: Int, y: Int): Light {
         val light = getLight(x, y)
 
@@ -81,7 +97,14 @@ class Light(
 fun main(vararg args: String) {
     val lights = XmasLights(false)
 
-    lights.turnOnRange(Pair(10, 10), Pair(50, 50))
+    lights.turnOnRange(Pair(887,9), Pair(959,629))
+    lights.turnOffRange(Pair(539,243), Pair(559,965))
+    lights.turnOffRange(Pair(370,819), Pair(676,868))
+    lights.turnOffRange(Pair(145,40), Pair(370,997))
+    lights.turnOffRange(Pair(301,3), Pair(808,453))
+    lights.turnOnRange(Pair(351,678), Pair(951,908))
+    lights.toggleRange(Pair(720,196), Pair(897,994))
+    lights.toggleRange(Pair(831,394), Pair(904,860))
     lights.displayLights()
 }
 
