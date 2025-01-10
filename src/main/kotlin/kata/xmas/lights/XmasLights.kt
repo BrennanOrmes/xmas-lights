@@ -3,8 +3,12 @@ package kata.xmas.lights
 class XmasLights(
 
 ) {
-    constructor(allOn: Boolean) : this() {
-        setUpLights(allOn)
+    constructor(brightness: Int) : this() {
+        setUpLights(brightness)
+    }
+
+    constructor(isOn: Boolean) : this() {
+        setUpLights(if (isOn) 1 else 0)
     }
 
     private val lights = hashMapOf<Pair<Int, Int>, Light>()
@@ -13,7 +17,7 @@ class XmasLights(
         for (x in 0..999) {
             for (y in 0..999) {
                 val light = getLight(x, y)
-                if (light.isOn) {
+                if (light.isOn()) {
                     print("*")
                 } else {
                     print(" ")
@@ -54,7 +58,7 @@ class XmasLights(
     fun turnOn(x: Int, y: Int): Light {
         val light = getLight(x, y)
 
-        light.isOn = true
+        light.brightness += 1
 
         return light
     }
@@ -62,7 +66,7 @@ class XmasLights(
     fun turnOff(x: Int, y: Int): Light {
         val light = getLight(x, y)
 
-        light.isOn = false
+        light.brightness = (light.brightness - 1).coerceAtLeast(0)
 
         return light
     }
@@ -70,15 +74,15 @@ class XmasLights(
     fun toggle(x: Int, y: Int): Light {
         val light = getLight(x, y)
 
-        light.isOn = !light.isOn
+        light.brightness += 2
 
         return light
     }
 
-    private fun setUpLights(isOn: Boolean) {
+    private fun setUpLights(brightness: Int) {
         for (x in 0..999) {
             for (y in 0..999) {
-                lights[Pair(x, y)] = Light(x, y, isOn)
+                lights[Pair(x, y)] = Light(x, y, brightness)
             }
         }
     }
@@ -91,11 +95,13 @@ class XmasLights(
 class Light(
     val x: Int,
     val y: Int,
-    var isOn: Boolean
-)
+    var brightness: Int = 0,
+) {
+    fun isOn(): Boolean = brightness > 0
+}
 
 fun main(vararg args: String) {
-    val lights = XmasLights(false)
+    val lights = XmasLights(1)
 
     lights.turnOnRange(Pair(887,9), Pair(959,629))
     lights.turnOffRange(Pair(539,243), Pair(559,965))
