@@ -9,6 +9,20 @@ class XmasLights(
 
     private val lights = hashMapOf<Pair<Int, Int>, Light>()
 
+    fun displayLights() {
+        for (x in 0..999) {
+            for (y in 0..999) {
+                val light = getLight(x, y)
+                if (light.isOn) {
+                    print("*")
+                } else {
+                    print(" ")
+                }
+            }
+            println()
+        }
+    }
+
     fun getLights(): HashMap<Pair<Int, Int>, Light> {
         return lights
     }
@@ -65,8 +79,9 @@ class Light(
 )
 
 fun main(vararg args: String) {
-    for(arg in args) {
-        println(arg)
-    }
+    val lights = XmasLights(false)
+
+    lights.turnOnRange(Pair(10, 10), Pair(50, 50))
+    lights.displayLights()
 }
 
